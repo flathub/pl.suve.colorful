@@ -21,6 +21,8 @@ finish-args:
   - --socket=pulseaudio
   - --device=dri
 
+rename-icon: colorful
+
 modules:
   - name: optipng
     sources:
@@ -46,26 +48,12 @@ modules:
   - name: colorful
     sources:
       - type: archive
-        url: https://github.com/suve/LD25/releases/download/release-2.0/colorful-2.0-source.zip
-        sha512: c609fa0f73924966f73839050f497d0ec6e425a2bc22878047f81ddd113f082b17686d533514dabd0bc9fbb04ead5909751ec7153b7d9966ef9a70163f23b21c
-
-      # Upstream commit that updates metadata files
-      # https://github.com/suve/LD25/commit/0f7861669b9df34f4826f1a6085872d1a3000b5f
-      - type: patch
-        path: 0f7861669b9df34f4826f1a6085872d1a3000b5f.patch
-
-      # Upstream commit that adds info about releases to metadata
-      # https://github.com/suve/LD25/commit/d94d992293aa77c9ae0a8b2c9019f51b5ef21e4b
-      - type: patch
-        path: d94d992293aa77c9ae0a8b2c9019f51b5ef21e4b.patch
-
-      # Makefile is hardcoded to /usr, switch to /app
-      - type: patch
-        path: fix-file-paths.patch
+        url: https://github.com/suve/LD25/releases/download/release-2.1/colorful-2.1-source.zip
+        sha512: 5abc4d1d7899f560c1a9c84dd0aa4b1da6173afefbe44d73273193b2d3e06c8f1f5a089e04b7457009cdbbdfc5b9b63be75ce93c505c787b6cc0ac2dd8bfdee9
 
     buildsystem: simple
     build-commands:
-      - ./configure.sh --assets=systemwide
+      - ./configure.sh --assets=systemwide --compat=v2 --prefix=$FLATPAK_DEST
       - make executable
       - make -j assets
       - make install

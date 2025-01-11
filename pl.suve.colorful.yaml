@@ -1,7 +1,7 @@
 app-id: pl.suve.colorful
 
 runtime: org.freedesktop.Platform
-runtime-version: "23.08"
+runtime-version: "24.08"
 
 sdk: org.freedesktop.Sdk
 sdk-extensions:
@@ -20,6 +20,8 @@ finish-args:
   - --share=ipc
   - --socket=pulseaudio
   - --device=dri
+  # This should be --device=input, but flathub does not support it yet
+  - --device=all
 
 rename-icon: colorful
 
@@ -42,14 +44,16 @@ modules:
       - type: archive
         url: https://downloads.xiph.org/releases/vorbis/vorbis-tools-1.4.2.tar.gz
         sha256: db7774ec2bf2c939b139452183669be84fda5774d6400fc57fde37f77624f0b0
+      - type: patch
+        path: patches-vorbis/0001-fix-build-with-gcc-14.patch
     cleanup:
       - '*'
 
   - name: colorful
     sources:
       - type: archive
-        url: https://github.com/suve/LD25/releases/download/release-2.1/colorful-2.1-source.zip
-        sha512: 5abc4d1d7899f560c1a9c84dd0aa4b1da6173afefbe44d73273193b2d3e06c8f1f5a089e04b7457009cdbbdfc5b9b63be75ce93c505c787b6cc0ac2dd8bfdee9
+        url: https://github.com/suve/LD25/releases/download/release-2.2/colorful-2.2-source.zip
+        sha512: dce8847e6f1251f769954a092e2903ef20eda3d778de5438c3aff1ea4e8403d09170b8390df336ec53e4c776eb7f5527c4266a83dc528e2e43d9c871bbbac159
 
     buildsystem: simple
     build-commands:
